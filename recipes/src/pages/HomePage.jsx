@@ -171,7 +171,12 @@ export default function HomePage() {
             {status === "success"
               ? filteredRecipes
                   .slice((currentPage - 1) * 6, currentPage * 6)
-                  .map((item) => <RecipeBlock key={item.id} recipe={item} />)
+                  .map((item) => (
+                    <Link key={item.id} to={`recipe/${item.id}`}>
+                      {" "}
+                      <RecipeBlock key={item.id} recipe={item} />
+                    </Link>
+                  ))
               : undefined}
           </div>
           <div className="flex h-14 w-full items-center justify-center">
@@ -179,8 +184,6 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-
-      {/* <Link to={`recipe/1`}>Recipe 1</Link> */}
     </>
   );
 }
