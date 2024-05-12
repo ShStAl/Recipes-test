@@ -2,9 +2,9 @@ import CookingTimeSVG from "./svg/CookingTimeSVG";
 import DifficultyStarEmptySVG from "./svg/DifficultyStarEmptySVG";
 import DifficultyStarFilledSVG from "./svg/DifficultyStarFilledSVG";
 
-export default function RecipeBlock(recipe) {
+export default function RecipeBlock({ recipe }) {
   const { name, image, cookTimeMinutes, difficulty, cuisine, mealType } =
-    recipe.recipe;
+    recipe;
   return (
     <div className="grid max-h-96 grid-cols-2 border-[1px] border-[#F0F0F0]">
       <div className="flex flex-col">
