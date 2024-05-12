@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export default function SingleRecipe() {
   const { recipeId } = useParams();
   const dispatch = useDispatch();
-  const recipe = useSelector((state) => state.singleRecipe.recipe);
+  const { recipe, status } = useSelector((state) => state.singleRecipe);
 
   useEffect(() => {
     dispatch(fetchSingleRecipe(recipeId));
@@ -35,7 +35,7 @@ export default function SingleRecipe() {
         <h1 className="text-2xl font-medium leading-7">{recipe.name}</h1>
       </div>
 
-      <div className="mt-3 grid w-full flex-grow grid-cols-4 gap-3">
+      <div className="mt-3 grid h-[calc(100%-72px)] w-full grid-cols-4 gap-3">
         <div className="grid h-full grid-rows-6 gap-2">
           <div className="divide-y-[1px] bg-white">
             <div className="w-full px-6 py-4 text-base font-medium">Кухня</div>
@@ -46,7 +46,9 @@ export default function SingleRecipe() {
           <div className="divide-y-[1px] bg-white">
             <div className="w-full px-6 py-4 text-base font-medium">Теги</div>
             <div className="flex w-full items-center p-6 text-base font-normal">
-              Европейская
+              {status === "success"
+                ? recipe.tags.map((e) => "#" + e).join(" ")
+                : undefined}
             </div>
           </div>
           <div className="divide-y-[1px] bg-white">
@@ -54,7 +56,7 @@ export default function SingleRecipe() {
               Калорийность
             </div>
             <div className="flex w-full items-center p-6 text-base font-normal">
-              Европейская
+              {`${recipe.caloriesPerServing} калорий`}
             </div>
           </div>
           <div className="divide-y-[1px] bg-white">
@@ -67,10 +69,12 @@ export default function SingleRecipe() {
           </div>
           <div className="row-span-2 divide-y-[1px] bg-white">
             <div className="w-full px-6 py-4 text-base font-medium">
-              Описание
+              Ингредиенты
             </div>
-            <div className="flex w-full items-center p-6 text-base font-normal">
-              Европейская
+            <div className="flex w-full flex-col p-6 text-sm font-normal">
+              {status === "success"
+                ? recipe.ingredients.map((line, i) => <p key={i}>{line}</p>)
+                : undefined}
             </div>
           </div>
         </div>
@@ -81,22 +85,45 @@ export default function SingleRecipe() {
               Общее время приготовления
             </div>
             <div className="flex w-full items-center p-6 text-base font-normal">
-              30 минут
+              {`${recipe.prepTimeMinutes + recipe.cookTimeMinutes} минут`}
             </div>
           </div>
           <div className="row-span-5 divide-y-[1px] bg-white">
             <div className="flex w-full px-6 py-4 text-base font-medium">
               Инструкция по приготовлению
             </div>
-            <div className="flex w-full items-center p-6 text-base font-normal">
-              Европейская
+            <div className="justify-center-center flex w-full flex-col p-6 text-base font-normal">
+              {status === "success"
+                ? recipe.instructions.map((line, i) => (
+                    <div key={i} className="relative border-l-2 p-4">
+                      <svg
+                        className="absolute -left-1.5 translate-y-1.5 transform"
+                        width="10"
+                        height="11"
+                        viewBox="0 0 10 11"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1 5.5C1 3.29086 2.79086 1.5 5 1.5C7.20914 1.5 9 3.29086 9 5.5C9 7.70914 7.20914 9.5 5 9.5C2.79086 9.5 1 7.70914 1 5.5Z"
+                          fill="white"
+                          stroke="#1890FF"
+                          strokeWidth="2"
+                        />
+                      </svg>
+
+                      {line}
+                    </div>
+                  ))
+                : undefined}
             </div>
           </div>
         </div>
-        <div className="col-span-2 h-full  bg-[#F7F7F7]">
+        <div className="col-span-2 flex h-full flex-col overflow-hidden bg-[#F7F7F7]">
           <img
-            className="h-96 object-center"
-            src="/No-Image-Placeholder.svg.png"
+            className="object-fill"
+            src={recipe.image}
+            alt="/No-Image-Placeholder.svg.png"
           ></img>
         </div>
       </div>

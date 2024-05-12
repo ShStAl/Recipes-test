@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import RecipeBlock from "../components/RecipeBlock";
 import CuisineSelector from "../components/CuisineSelector";
 import DishTypeSelector from "../components/DishTypeSelector";
@@ -171,12 +170,7 @@ export default function HomePage() {
             {status === "success"
               ? filteredRecipes
                   .slice((currentPage - 1) * 6, currentPage * 6)
-                  .map((item) => (
-                    <Link key={item.id} to={`recipe/${item.id}`}>
-                      {" "}
-                      <RecipeBlock key={item.id} recipe={item} />
-                    </Link>
-                  ))
+                  .map((item) => <RecipeBlock key={item.id} recipe={item} />)
               : undefined}
           </div>
           <div className="flex h-14 w-full items-center justify-center">
