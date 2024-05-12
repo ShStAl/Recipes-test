@@ -1,17 +1,25 @@
 import { Link } from "react-router-dom";
 import RecipeBlock from "../components/RecipeBlock";
-import CountrySelector from "../components/CountrySelector";
+import CuisineSelector from "../components/CuisineSelector";
 import DishTypeSelector from "../components/DishTypeSelector";
 import DifficultySelector from "../components/DifficultySelector";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setDefault } from "../redux/filter/FilterSlice";
+import { useEffect } from "react";
+import { fetchRecipes } from "../redux/recipes/RecipesSlice";
 
 export default function HomePage() {
   const dispatch = useDispatch();
+  const { items, status } = useSelector((state) => state.recipes);
+
+  useEffect(() => {
+    dispatch(fetchRecipes());
+  }, []);
 
   const onClearFilters = () => {
     dispatch(setDefault());
   };
+
   return (
     <>
       <div className="flex h-[72px] w-full items-center bg-white px-6 py-4">
@@ -24,8 +32,8 @@ export default function HomePage() {
         <div className="flex h-full flex-col gap-6 bg-white p-6">
           <div className="flex flex-col gap-6 p-6">
             <img
-              className="h-40 object-cover"
-              src="/No-Image-Placeholder.svg.png"
+              className="h-40 rounded-sm object-cover"
+              src="/Cuisine.jpeg"
             ></img>
             <div className="flex flex-col gap-6">
               <p className="text-sm font-normal leading-[18px]">
@@ -45,8 +53,8 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col items-end gap-4">
             <div className="flex w-full items-center justify-end gap-3">
-              <p className="text-base font-bold leading-6">Country:</p>
-              <CountrySelector />
+              <p className="text-base font-bold leading-6">Cuisine:</p>
+              <CuisineSelector />
             </div>
             <div className="flex w-full items-center justify-end gap-3">
               <p className="text-base font-bold leading-6">Type:</p>
@@ -82,10 +90,11 @@ export default function HomePage() {
             </p>
           </div>
           <div className="grid w-full flex-grow grid-cols-3 gap-3 p-3">
-            <RecipeBlock />
-            <RecipeBlock />
-            <RecipeBlock />
-            <RecipeBlock />
+            {status === "success"
+              ? items.recipes.map((item) => (
+                  <RecipeBlock key={item.id} recipe={item} />
+                ))
+              : undefined}
           </div>
           <div className="flex h-14 w-full items-center justify-center">
             Pagination

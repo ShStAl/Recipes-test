@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  country: "All",
+  cuisine: "All",
   dishType: "Any",
   difficulty: 0,
   currentPage: 1,
@@ -11,8 +11,8 @@ export const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setCountry: (state, action) => {
-      state.country = action.payload;
+    setCuisine: (state, action) => {
+      state.cuisine = action.payload;
     },
     setDishType: (state, action) => {
       state.dishType = action.payload;
@@ -24,7 +24,7 @@ export const filterSlice = createSlice({
       state.currentPage = action.payload;
     },
     setDefault: (state) => {
-      state.country = "All";
+      state.cuisine = "All";
       state.dishType = "Any";
       state.difficulty = 0;
     },
@@ -32,7 +32,7 @@ export const filterSlice = createSlice({
 });
 
 export const {
-  setCountry,
+  setCuisine,
   setDishType,
   setDifficulty,
   setCurrentPage,

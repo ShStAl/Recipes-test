@@ -9,7 +9,17 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useSelector, useDispatch } from "react-redux";
 import { setDishType } from "../redux/filter/FilterSlice";
 
-const dishTypes = ["Any", "Breakfast", "Dinner", "Lunch", "Snack"];
+const dishTypes = [
+  "Any",
+  "Appetizer",
+  "Beverage",
+  "Breakfast",
+  "Dessert",
+  "Dinner",
+  "Lunch",
+  "Side Dish",
+  "Snack",
+];
 
 export default function DishTypeSelector() {
   const dishType = useSelector((state) => state.filter.dishType);

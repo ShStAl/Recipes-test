@@ -7,23 +7,38 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useSelector, useDispatch } from "react-redux";
-import { setCountry } from "../redux/filter/FilterSlice";
+import { setCuisine } from "../redux/filter/FilterSlice";
 
-const countries = ["All", "Russia", "Tanya Fox", "Arlene Mccoy", "Devon Webb"];
+const cuisines = [
+  "All",
+  "American",
+  "Asian",
+  "Greek",
+  "Indian",
+  "Italian",
+  "Japanese",
+  "Korean",
+  "Mediterranean",
+  "Mexican",
+  "Moroccan",
+  "Pakistani",
+  "Russian",
+  "Thai",
+];
 
-export default function CountrySelector() {
-  const country = useSelector((state) => state.filter.country);
+export default function CuisineSelector() {
+  const cuisine = useSelector((state) => state.filter.cuisine);
   const dispatch = useDispatch();
 
-  const onChangeCountry = (value) => {
-    dispatch(setCountry(value));
+  const onChangeCuisine = (value) => {
+    dispatch(setCuisine(value));
   };
 
   return (
     <>
-      <Listbox value={country} onChange={onChangeCountry}>
+      <Listbox value={cuisine} onChange={onChangeCuisine}>
         <ListboxButton className="relative block w-full max-w-72 rounded-sm border border-[#D9D9D9] px-4 py-2 text-left text-sm">
-          {country}
+          {cuisine}
 
           <ChevronDownIcon
             className="group pointer-events-none absolute right-2.5 top-2.5 size-4"
@@ -39,9 +54,9 @@ export default function CountrySelector() {
             anchor="bottom"
             className="w-[var(--button-width)] rounded-sm border border-[#D9D9D9] bg-white focus:outline-none"
           >
-            {countries.map((item) => (
+            {cuisines.map((item) => (
               <ListboxOption
-                key={countries.indexOf(item)}
+                key={cuisines.indexOf(item)}
                 value={item}
                 className="group flex cursor-default items-center gap-2 px-4 py-2 data-[focus]:bg-[#D9D9D9]"
               >
