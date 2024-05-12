@@ -1,4 +1,4 @@
-# iTunes Search
+# Recipe Search
 Web app for recipe search using publicly available Dummy REST API
 
 ## Features
