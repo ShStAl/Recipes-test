@@ -3,8 +3,15 @@ import RecipeBlock from "../components/RecipeBlock";
 import CountrySelector from "../components/CountrySelector";
 import DishTypeSelector from "../components/DishTypeSelector";
 import DifficultySelector from "../components/DifficultySelector";
+import { useDispatch } from "react-redux";
+import { setDefault } from "../redux/filter/FilterSlice";
 
 export default function HomePage() {
+  const dispatch = useDispatch();
+
+  const onClearFilters = () => {
+    dispatch(setDefault());
+  };
   return (
     <>
       <div className="flex h-[72px] w-full items-center bg-white px-6 py-4">
@@ -51,7 +58,10 @@ export default function HomePage() {
               </p>
               <DifficultySelector />
             </div>
-            <button className="self-start text-sm text-[#1990FF]">
+            <button
+              className="self-start text-sm text-[#1990FF]"
+              onClick={onClearFilters}
+            >
               Clear filters
             </button>
           </div>
