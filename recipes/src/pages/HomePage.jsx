@@ -4,13 +4,16 @@ import CuisineSelector from "../components/CuisineSelector";
 import DishTypeSelector from "../components/DishTypeSelector";
 import DifficultySelector from "../components/DifficultySelector";
 import { useSelector, useDispatch } from "react-redux";
-import { setDefault } from "../redux/filter/FilterSlice";
+import { setDefault, setRandom } from "../redux/filter/FilterSlice";
 import { useEffect } from "react";
 import { fetchRecipes } from "../redux/recipes/RecipesSlice";
 
 export default function HomePage() {
   const dispatch = useDispatch();
   const { items, status } = useSelector((state) => state.recipes);
+  const { cuisine, dishType, difficulty } = useSelector(
+    (state) => state.filter,
+  );
 
   useEffect(() => {
     dispatch(fetchRecipes());
@@ -19,6 +22,68 @@ export default function HomePage() {
   const onClearFilters = () => {
     dispatch(setDefault());
   };
+
+  function filterRecipes(recipes, filter) {
+    return recipes.filter((recipe) => {
+      if (filter.cuisine !== "All" && recipe.cuisine !== filter.cuisine) {
+        return false;
+      }
+
+      if (
+        filter.dishType !== "Any" &&
+        !recipe.mealType.includes(filter.dishType)
+      ) {
+        return false;
+      }
+
+      if (
+        filter.difficulty !== "Any" &&
+        recipe.difficulty !== filter.difficulty
+      ) {
+        return false;
+      }
+
+      return true;
+    });
+  }
+
+  function recipeRandom() {
+    const cuisines = [
+      "All",
+      "American",
+      "Asian",
+      "Greek",
+      "Indian",
+      "Italian",
+      "Japanese",
+      "Korean",
+      "Mediterranean",
+      "Mexican",
+      "Moroccan",
+      "Pakistani",
+      "Russian",
+      "Thai",
+    ];
+    const difficulties = ["Any", "Easy", "Medium", "Hard"];
+    const dishTypes = [
+      "Any",
+      "Appetizer",
+      "Beverage",
+      "Breakfast",
+      "Dessert",
+      "Dinner",
+      "Lunch",
+      "Side Dish",
+      "Snack",
+    ];
+    const cuisinesRand = cuisines[Math.floor(Math.random() * cuisines.length)];
+    const difficultiesRand =
+      difficulties[Math.floor(Math.random() * difficulties.length)];
+    const dishTypesRand =
+      dishTypes[Math.floor(Math.random() * dishTypes.length)];
+
+    dispatch(setRandom({ cuisinesRand, difficultiesRand, dishTypesRand }));
+  }
 
   return (
     <>
@@ -77,7 +142,10 @@ export default function HomePage() {
             <p className="text-base text-[#808080]">
               А еще можно попробовать на вкус удачу
             </p>
-            <button className="border px-4 py-1 text-sm text-[#929292]">
+            <button
+              className="border px-4 py-1 text-sm text-[#929292]"
+              onClick={recipeRandom}
+            >
               Мне повезëт!
             </button>
           </div>
@@ -86,14 +154,22 @@ export default function HomePage() {
           <div className="flex h-14 w-full gap-3 border-b-[1px] border-[#F0F0F0] bg-white px-6 py-4">
             <p className="text-xl font-medium leading-6 ">Найденные рецепты</p>
             <p className="text-sm font-normal leading-[22px] text-[#8C8C8C]">
-              288
+              {status === "success"
+                ? filterRecipes(items.recipes, {
+                    cuisine,
+                    dishType,
+                    difficulty,
+                  }).length
+                : undefined}
             </p>
           </div>
           <div className="grid w-full flex-grow grid-cols-3 gap-3 p-3">
             {status === "success"
-              ? items.recipes.map((item) => (
-                  <RecipeBlock key={item.id} recipe={item} />
-                ))
+              ? filterRecipes(items.recipes, {
+                  cuisine,
+                  dishType,
+                  difficulty,
+                }).map((item) => <RecipeBlock key={item.id} recipe={item} />)
               : undefined}
           </div>
           <div className="flex h-14 w-full items-center justify-center">

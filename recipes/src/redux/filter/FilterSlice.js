@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   cuisine: "All",
   dishType: "Any",
-  difficulty: 0,
+  difficulty: "Any",
   currentPage: 1,
 };
 
@@ -26,7 +26,12 @@ export const filterSlice = createSlice({
     setDefault: (state) => {
       state.cuisine = "All";
       state.dishType = "Any";
-      state.difficulty = 0;
+      state.difficulty = "Any";
+    },
+    setRandom: (state, action) => {
+      state.cuisine = action.payload.cuisinesRand;
+      state.dishType = action.payload.dishTypesRand;
+      state.difficulty = action.payload.difficultiesRand;
     },
   },
 });
@@ -37,6 +42,7 @@ export const {
   setDifficulty,
   setCurrentPage,
   setDefault,
+  setRandom,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

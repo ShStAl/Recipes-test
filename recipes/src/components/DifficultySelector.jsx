@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { setDifficulty } from "../redux/filter/FilterSlice";
 
 const difficulties = [
-  { name: "Любая", value: 0 },
-  { name: "Низкая", value: 1 },
-  { name: "Средняя", value: 2 },
-  { name: "Высокая", value: 3 },
+  { name: "Любая", value: "Any" },
+  { name: "Низкая", value: "Easy" },
+  { name: "Средняя", value: "Medium" },
+  { name: "Высокая", value: "Hard" },
 ];
 
 export default function DifficultySelector() {

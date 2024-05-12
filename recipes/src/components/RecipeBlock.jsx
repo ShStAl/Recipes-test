@@ -6,7 +6,7 @@ export default function RecipeBlock(recipe) {
   const { name, image, cookTimeMinutes, difficulty, cuisine, mealType } =
     recipe.recipe;
   return (
-    <div className="grid grid-cols-2 border-[1px] border-[#F0F0F0]">
+    <div className="grid max-h-96 grid-cols-2 border-[1px] border-[#F0F0F0]">
       <div className="flex flex-col">
         <div className="flex h-16 items-center border-b-[1px] border-[#F0F0F0] bg-white px-6 py-4 text-base font-medium leading-4">
           {name}

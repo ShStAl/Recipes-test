@@ -4,22 +4,8 @@ import axios from "axios";
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipesStatus",
   async () => {
-    // const { sortBy, order, category, search, currentPage } = params;
     const { data } = await axios.get(
-      `https://dummyjson.com/recipes?limit=6&select=id,name,image,cookTimeMinutes,difficulty,cuisine,mealType,image'`,
-      // {
-      //   params: pickBy(
-      //     {
-      //       page: currentPage,
-      //       limit: 4,
-      //       category,
-      //       sortBy,
-      //       order,
-      //       search,
-      //     },
-      //     identity,
-      //   ),
-      // }
+      `https://dummyjson.com/recipes?&limit=300&select=id,name,image,cookTimeMinutes,difficulty,cuisine,mealType,image'`,
     );
     return data;
   },
