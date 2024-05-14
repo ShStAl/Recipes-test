@@ -23,6 +23,7 @@ Web app for recipe search using publicly available Dummy REST API
 
 Use the package manager to install dependencies
 ```bash
+cd recipes
 yarn
 ```
 
