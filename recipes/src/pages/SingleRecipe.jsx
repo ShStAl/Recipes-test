@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleRecipe } from "../redux/singleRecipe/SingleRecipeSlice";
 import { useEffect } from "react";
+import SingleRecipePagination from "../components/SingleRecipePagination";
 
 export default function SingleRecipe() {
   const { recipeId } = useParams();
@@ -15,24 +16,27 @@ export default function SingleRecipe() {
 
   return (
     <>
-      <div className="flex h-[72px] w-full items-center gap-3 bg-white px-6 py-4">
-        <Link to={`/`}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-            />
-          </svg>
-        </Link>
-        <h1 className="text-2xl font-medium leading-7">{recipe.name}</h1>
+      <div className="flex h-[72px] w-full items-center justify-between bg-white px-6 py-4">
+        <div className="flex items-center gap-3">
+          <Link to={`/`}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-6 w-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+              />
+            </svg>
+          </Link>
+          <h1 className="text-2xl font-medium leading-7">{recipe.name}</h1>
+        </div>
+        <SingleRecipePagination />
       </div>
 
       <div className="mt-3 grid h-[calc(100%-72px)] w-full grid-cols-4 gap-3">
@@ -121,7 +125,7 @@ export default function SingleRecipe() {
         </div>
         <div className="col-span-2 flex h-full flex-col overflow-hidden bg-[#F7F7F7]">
           <img
-            className="object-fill"
+            className="object-fit"
             src={recipe.image}
             alt="/No-Image-Placeholder.svg.png"
           ></img>

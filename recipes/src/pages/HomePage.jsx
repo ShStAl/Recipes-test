@@ -3,7 +3,11 @@ import CuisineSelector from "../components/CuisineSelector";
 import DishTypeSelector from "../components/DishTypeSelector";
 import DifficultySelector from "../components/DifficultySelector";
 import { useSelector, useDispatch } from "react-redux";
-import { setDefault, setRandom } from "../redux/filter/FilterSlice";
+import {
+  setDefault,
+  setRandom,
+  setCurrentPage,
+} from "../redux/filter/FilterSlice";
 import { useEffect } from "react";
 import { fetchRecipes } from "../redux/recipes/RecipesSlice";
 import Pagination from "../components/Pagination";
@@ -92,6 +96,7 @@ export default function HomePage() {
       dishTypes[Math.floor(Math.random() * dishTypes.length)];
 
     dispatch(setRandom({ cuisinesRand, difficultiesRand, dishTypesRand }));
+    dispatch(setCurrentPage(1));
   }
 
   return (
@@ -172,6 +177,9 @@ export default function HomePage() {
                   .slice((currentPage - 1) * 6, currentPage * 6)
                   .map((item) => <RecipeBlock key={item.id} recipe={item} />)
               : undefined}
+            {filteredRecipes.length === 0 ? (
+              <p className="ml-3 text-lg">Рецепты не найдены</p>
+            ) : undefined}
           </div>
           <div className="flex h-14 w-full items-center justify-center">
             <Pagination length={filteredRecipes.length} />
